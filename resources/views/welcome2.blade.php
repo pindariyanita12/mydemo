@@ -1,4 +1,4 @@
-@include('layouts.app')
+@include('layouts.welcomeapp')
 <header class="bg-primary bg-gradient text-white">
     <div class="container px-2 text-center">
         <h1 class="fw-bolder py-3">Welcome to EasyMilk</h1>

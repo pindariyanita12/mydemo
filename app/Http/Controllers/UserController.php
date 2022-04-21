@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Liter;
+use App\Models\Feedback;
+use App\Models\feedbackk;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -44,7 +46,7 @@ class UserController extends Controller
 
         $liter->save();
 
-        return redirect('/dashboard');
+        return redirect('/userdashboard');
 
     }
 
@@ -104,6 +106,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+
     }
     public function updateProfile(){
 
@@ -121,4 +124,26 @@ class UserController extends Controller
         $user->save();
         return redirect('/dashboard');
     }
+    public function getfeedback(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email'=>'required',
+            'subject'=>'required',
+            'message'=>'required'
+
+        ]);
+
+        $liter = new feedbackk;
+
+        $liter->name = $request->name;
+        $liter->email = $request->email;
+        $liter->subject = $request->subject;
+        $liter->message = $request->message;
+
+        $liter->save();
+
+
+        return view('thankyou');
+    }
+
 }

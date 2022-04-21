@@ -58,6 +58,12 @@
                             <a class="nav-link" href="{{ route('admindashboard') }}">{{ __('Dashboard') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('showallusers') }}">{{ __('Show Users') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('showpastusers') }}">{{ __('Past Users') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('updateadminprofile') }}">{{ __('Update Profile') }}</a>
                         </li>
                             <li class="nav-item dropdown">

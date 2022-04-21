@@ -16,12 +16,8 @@
                         <thead class="thead-dark">
                           <tr>
                             <th>Id</th>
-                            <th>Admin Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Area</th>
-                            <th>Total Customers</th>
-                            <th>Delete</th>
+                            <th>Customer Name</th>
+                            <th>Deleted At</th>
                           </tr>
                         </thead>
                         <!--Table head-->
@@ -29,19 +25,13 @@
                         <!--Table body-->
                         <tbody class="table-striped">
                           <?php $counter=1 ?>
-                         @foreach($admins as $abc)
+                         @foreach($liters as $abc)
 
                          <tr>
 
                             <td>{{$abc['id']}}</td>
-                            <td>{{$abc->name}}</td>
-
-                            <td>{{$abc->email}}</td>
-                            <td>{{$abc->phone_number}}</td>
-                            <td>{{$abc->area}}</td>
-                            <td><a href="{{"showalladmindashboard/".$abc['area']}}">View</a></td>
-                            <td><a href={{"deleteadmin/".$abc['id']}}>Delete</a></td>
-
+                            <td>{{$abc['name']}}</td>
+                            <td>{{$abc['deleted_at']}}</td>
 
                         </tr>
 

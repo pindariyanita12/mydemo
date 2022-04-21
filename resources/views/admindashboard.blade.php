@@ -36,12 +36,12 @@
                             <td>{{$abc['id']}}</td>
                             <td>{{$abc->user->name}}</td>
 
-                            <td>{{$abc->date}}</td>
-                            <td>{{$abc->day}}</td>
-                            <td>{{$abc->time}}</td>
+                            <td>{{$abc['date']}}</td>
+                            <td>{{$abc['day']}}</td>
+                            <td>{{$abc['time']}}</td>
 
-                        <td>{{$abc->liter}}</td>
-                        <td>{{$abc->rupees}}</td>
+                        <td>{{$abc['liter']}}</td>
+                        <td>{{$abc['rupees']}}</td>
 
                         </tr>
 

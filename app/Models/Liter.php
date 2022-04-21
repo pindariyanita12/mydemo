@@ -11,8 +11,8 @@ class Liter extends Model
     protected $fillable = [
         'date',
         'day',
-'time',
-'area',
+        'time',
+        'area',
         'liter'
     ];
     public function user()

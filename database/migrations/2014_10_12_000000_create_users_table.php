@@ -21,10 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('area');
             $table->string('address');
             $table->boolean('is_admin')->nullable();
+            $table->boolean('is_superadmin')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
