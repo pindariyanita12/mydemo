@@ -14,148 +14,201 @@ class AdminController extends Controller
 
     public function showalldata()
     {
-        $user = User::where('id', auth()->user()->id)->get();
-        //return response()->json([$user]);
-        if ($user[0]['is_admin'] == 1) {
-            $data = Liter::where('area', auth()->user()->area)->with('user')->get();
-            //return response()->json([$data]);
 
-            return view('admindashboard', ['liters' => $data]);
+        try {
+            $user = User::where('id', auth()->user()->id)->get();
+            //return response()->json([$user]);
+            if ($user[0]['is_admin'] == 1) {
+                $user = User::where('area', auth()->user()->area)->where('is_admin', null)->with('liters')->get();
+            }
+
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
         }
-
+        return view('admindashboard', ['users' => $user]);
     }
     public function updateProfile()
     {
-
-        $user = User::where('id', auth()->user()->id)->first();
-        // dd($user);
+        try {
+            $user = User::where('id', auth()->user()->id)->first();
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return view('updateadminprofile')->with('user', $user);
     }
     public function updateSaveUser(Request $req)
     {
-        $user = User::where('id', auth()->user()->id)->first();
-        $user->name = $req->name;
-        $user->email = $req->email;
-        $user->phone_number = $req->phone_number;
-        $user->address = $req->address;
+        try {
+            $user = User::where('id', auth()->user()->id)->first();
+            $user->name = $req->name;
+            $user->email = $req->email;
+            $user->phone_number = $req->phone_number;
+            $user->address = $req->address;
 
-        $user->save();
+            $user->save();
+
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return redirect('/admindashboard');
     }
     public function superadmindata()
     {
-
-        $user = User::where('is_admin', 1)->get();
-        //return response()->json([$user]);
-        if ($user) {
-            $data = User::where('is_admin', 1)->get();
-            // return response()->json([$data]);
-            return view('superadmindashboard', ['admins' => $data]);
+        try {
+            $user = User::where('is_admin', 1)->get();
+            if ($user) {
+                $data = User::where('is_admin', 1)->get();
+            }
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
         }
+        return view('superadmindashboard', ['admins' => $data]);
 
     }
     public function showalladmindashboard(Request $req)
     {
+        try {
+            $data = Liter::where('area', $req->area)->with('user')->get();
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
 
-        $data = Liter::where('area', $req->area)->with('user')->get();
-
-        //return response()->json([$data]);
         return view('showcustomersdata', ['liters' => $data]);
 
     }
     public function showallusers()
     {
-        $data = User::where('area', auth()->user()->area)->where('is_admin', '=', null)->get();
-
-        //return response()->json([$data]);
+        try {
+            $data = User::where('area', auth()->user()->area)->where('is_admin', '=', null)->get();
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return view('showallusers', ['liters' => $data]);
     }
     public function deleteuser(Request $req)
     {
-        $complaint = User::find($req->id);
-        $complaint->delete();
-        //dd($complaint);
-        session()->flash('status', 'successfully deleted');
+        try {
+            $complaint = User::find($req->id);
+            $complaint->delete();
+
+            session()->flash('status', 'successfully deleted');
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return Redirect::back();
     }
     public function deleteadmin(Request $req)
     {
-        $complaint = User::find($req->id);
-        $complaint->delete();
-        //dd($complaint);
-        session()->flash('status', 'successfully deleted');
+        try {
+            $complaint = User::find($req->id);
+            $complaint->delete();
+            //dd($complaint);
+            session()->flash('status', 'successfully deleted');
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return Redirect::back();
+
     }
     public function showpastusers()
     {
-        $user = User::onlyTrashed()->get();
+        try {
+            $user = User::onlyTrashed()->get();
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return view('showpastusers', ['liters' => $user]);
     }
     public function addadmin(Request $request)
     {
 
-        //dd($request->all)
-        $liter = new User;
-        //dd("hi");
-        $liter->name = $request->name;
-        //dd($request->all);
-        $liter->email = $request->email;
-        $liter->phone_number = $request->phone_number;
-        $liter->area = $request->area;
-        $liter->address = $request->address;
-        $liter->is_admin = $request->is_admin;
-        $liter->password = Hash::make($request->password);
-        //liter->password=$request->password_confirmation;
-        $liter->save();
+        try {
+            $liter = new User;
+
+            $liter->name = $request->name;
+
+            $liter->email = $request->email;
+            $liter->phone_number = $request->phone_number;
+            $liter->area = $request->area;
+            $liter->address = $request->address;
+            $liter->is_admin = $request->is_admin;
+            $liter->password = Hash::make($request->password);
+
+            $liter->save();
+        } catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
 
         return redirect('superadmindashboard');
     }
     public function updatesuperadminProfile()
     {
+        try{
+            $user = User::where('id', auth()->user()->id)->first();
+        }
 
-        $user = User::where('id', auth()->user()->id)->first();
-        // dd($user);
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return view('updatesuperadminprofile')->with('user', $user);
     }
     public function updatesuperadminSaveUser(Request $req)
     {
-        $user = User::where('id', auth()->user()->id)->first();
-        $user->name = $req->name;
-        $user->email = $req->email;
-        $user->phone_number = $req->phone_number;
-        $user->address = $req->address;
+        try{
+            $user = User::where('id', auth()->user()->id)->first();
+            $user->name = $req->name;
+            $user->email = $req->email;
+            $user->phone_number = $req->phone_number;
+            $user->address = $req->address;
 
-        $user->save();
+            $user->save();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
+
         return redirect('/admindashboard');
     }
     public function showpastadmins()
     {
-        $user = User::onlyTrashed()->get();
+        try{
+            $user = User::onlyTrashed()->get();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         return view('showpastadmins', ['liters' => $user]);
     }
     public function weeklybill()
     {
-        $user = User::where('is_admin', null)->where('is_superadmin', null)->get();
+        //$user = User::where('is_admin', null)->where('is_superadmin', null)->get();
         //return response()->json([$user]);
-
-        $data = Liter::where('user_id', auth()->user()->id)->get();
+        try{
+            $data = Liter::where('user_id', auth()->user()->id)->get();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
 
         return view('emails.weeklyReport', ['liters' => $data]);
 
     }
     public function send_mail(Request $request)
     {
-        $details = [
-            'subject' => 'Test Notification',
-        ];
+        try{
+            $details = [
+                'subject' => 'Test Notification',
+            ];
 
-        $job = (new SendEmailJob($details))
-            ->delay(now()->addSecond(1));
+            $job = (new SendEmailJob($details))
+                ->delay(now()->addSecond(1));
 
-        dispatch($job);
+            dispatch($job);
 
-
-
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
         echo "Mail send successfully !!";
     }
 

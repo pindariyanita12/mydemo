@@ -27,7 +27,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
     Route::post('/add', [UserController::class, 'add'])->name('add');
-    Route::get('/userdashboard', [HomeController::class, 'index2'])->name('userdashboard');
+    Route::get('/userdashboard', [HomeController::class, 'index'])->name('userdashboard');
     Route::get('/updateprofile', [UserController::class, 'updateProfile'])->name('updateprofile');
     Route::post('/updatesaveuser', [UserController::class, 'updateSaveUser'])->name('updatesaveuser');
     Route::get('/add', function () {
@@ -48,10 +48,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/updatesuperadminprofile', [AdminController::class, 'updatesuperadminProfile'])->name('updatesuperadminprofile');
     Route::get('/deleteadmin/{id}', [AdminController::class, 'deleteadmin']);
     Route::get('/showpastadmins', [AdminController::class, 'showpastadmins'])->name('showpastadmins');
-
-    Route::get('/welcome', function () {
-        return view('welcome2');
-    });
 });
 Route::get('/checkout/{email}/total/{total}',[CheckoutController::class,'checkout']);
 Route::post('checkout',[HomeController::class,'welcome'])->name('checkout.credit-card');

@@ -28,23 +28,30 @@ class UserController extends Controller
      */
     public function add(Request $request)
     {
+        try{
+            $request->validate([
+                'liter' => 'required',
 
-        $request->validate([
-            'liter' => 'required',
+            ]);
 
-        ]);
+            $liter = new Liter;
 
-        $liter = new Liter;
+            $liter->date = $request->date;
+            $liter->day = $request->day;
+            $liter->time = $request->time;
+            $liter->area = $request->area;
+            $liter->liter = $request->liter;
+            $liter->rupees=60*(float)($request->liter);
+            $liter->user_id = auth()->user()->id;
 
-        $liter->date = $request->date;
-        $liter->day = $request->day;
-        $liter->time = $request->time;
-        $liter->area = $request->area;
-        $liter->liter = $request->liter;
-        $liter->rupees=60*(float)($request->liter);
-        $liter->user_id = auth()->user()->id;
+            $liter->save();
 
-        $liter->save();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
+
+
 
         return redirect('/userdashboard');
 
@@ -58,8 +65,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd("hi");
-
+        //
 
     }
 
@@ -109,38 +115,56 @@ class UserController extends Controller
 
     }
     public function updateProfile(){
+        try{
+            $user=User::where('id',auth()->user()->id)->first();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
 
-        $user=User::where('id',auth()->user()->id)->first();
-        // dd($user);
+
         return view('updateprofile')->with('user',$user);
     }
     public function updateSaveUser(Request $req){
-        $user=User::where('id',auth()->user()->id)->first();
-        $user->name=$req->name;
-        $user->email=$req->email;
-        $user->phone_number=$req->phone_number;
-        $user->address=$req->address;
+        try{
+            $user=User::where('id',auth()->user()->id)->first();
+            $user->name=$req->name;
+            $user->email=$req->email;
+            $user->phone_number=$req->phone_number;
+            $user->address=$req->address;
 
-        $user->save();
+            $user->save();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
+
+
         return redirect('/dashboard');
     }
     public function getfeedback(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'email'=>'required',
-            'subject'=>'required',
-            'message'=>'required'
+        try{
+            $request->validate([
+                'name' => 'required',
+                'email'=>'required',
+                'subject'=>'required',
+                'message'=>'required'
 
-        ]);
+            ]);
 
-        $liter = new feedbackk;
+            $liter = new feedbackk;
 
-        $liter->name = $request->name;
-        $liter->email = $request->email;
-        $liter->subject = $request->subject;
-        $liter->message = $request->message;
+            $liter->name = $request->name;
+            $liter->email = $request->email;
+            $liter->subject = $request->subject;
+            $liter->message = $request->message;
 
-        $liter->save();
+            $liter->save();
+        }
+        catch (\Exception $e) {
+            return view('demoexception', ['errors' => $e]);
+        }
+
 
 
         return view('thankyou');

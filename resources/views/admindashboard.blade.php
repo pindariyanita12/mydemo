@@ -2,6 +2,7 @@
 @extends('layouts.adminapp')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
 
@@ -28,15 +29,36 @@
 
                         <!--Table body-->
                         <tbody class="table-striped">
-                          <?php $counter=1 ?>
-                         @foreach($liters as $abc)
+                          <?php
+
+                          for($i=0;$i<sizeof($users);$i++){
+                              for($j=0;$j<sizeof($users[$i]->liters);$j++){
+                                  echo '<tr>';
+                                  echo '<td>'.$users[$i]->id.'</td>';
+                                  echo '<td>'.$users[$i]->name.'</td>';
+                                  echo '<td>'.$users[$i]->liters[$j]->date.'</td>';
+                                  echo '<td>'.$users[$i]->liters[$j]->day.'</td>';
+                                  echo '<td>'.$users[$i]->liters[$j]->time.'</td>';
+
+                                  echo '<td>'.$users[$i]->liters[$j]->liter.'</td>';
+                                  echo '<td>'.$users[$i]->liters[$j]->rupees.'</td>';
+                                    echo '</tr>';
+
+
+                              }
+                          }
+
+
+
+                          ?>
+                         {{-- @foreach($liters as $abc)
 
                          <tr>
 
                             <td>{{$abc['id']}}</td>
-                            <td>{{$abc->user->name}}</td>
+                            <td>{{$abc['name']}}</td>
 
-                            <td>{{$abc['date']}}</td>
+                            <td>{{$abc->liters->date}}</td>
                             <td>{{$abc['day']}}</td>
                             <td>{{$abc['time']}}</td>
 
@@ -45,7 +67,7 @@
 
                         </tr>
 
-                        @endforeach
+                        @endforeach --}}
                         <tr class="table-info">
 
 
