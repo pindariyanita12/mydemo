@@ -32,17 +32,17 @@ class HomeController extends Controller
             return view('admindashboard', ['users' => $user]);
         } else if ($user[0]['is_superadmin'] == 1) {
             $data = User::where('is_admin', 1)->get();
-
             return view('superadmindashboard', ['admins' => $data]);
         }
-
         $data = Liter::where('user_id', auth()->user()->id)->get();
-
-
         return view('dashboard', ['liters' => $data]);
 
     }
-
+    /**
+     * Return view after successfull payment
+     *
+     * @return void
+     */
     public function welcome(){
         return view('thankyouforpayment');
     }

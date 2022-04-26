@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Mail;
 class SendEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-   /**
- * @var string
- */
-public $details = '';
+    /**
+     * @var string
+     */
+    public $details = '';
     public $timeout = 7200;
     /**
      * Create a new job instance.
@@ -38,7 +38,7 @@ public $details = '';
     {
         $user = new User;
         $data = $user->where('is_admin', null)->where('is_superadmin', null)->with('liters')->get();
-
+        //sending mail to all users
         for ($i = 0; $i < sizeof($data); $i++) {
             $sum = 0;
             $toname = $data[$i]->name;
@@ -50,12 +50,12 @@ public $details = '';
             }
             $data1 = array('total' => $sum, 'name' => $toname, 'email' => $tomail);
 
-            Mail::send('mail.Test_mail', ["data1"=>$data1], function ($m) use ($data1) {
+            Mail::send('mail.Test_mail', ["data1" => $data1], function ($m) use ($data1) {
                 $m->from('hello@app.com', 'Your Application');
 
                 $m->to($data1['email'])->subject('Your Reminder!');
             });
-            //dd($data1);
+
         }
 
     }

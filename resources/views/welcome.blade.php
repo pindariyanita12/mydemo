@@ -47,7 +47,7 @@
                     <!--Grid column-->
                     <div class="col-md-9 mb-md-0 mb-5">
                         <form id="contact-form" name="contact-form" action="/home" method="POST">
-                                @csrf
+                            @csrf
                             <!--Grid row-->
                             <div class="row">
 

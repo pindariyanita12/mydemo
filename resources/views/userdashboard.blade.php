@@ -15,11 +15,9 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
-
                             <th>Date</th>
                             <th>Day</th>
                             <th>Time</th>
-
                             <th>Liters</th>
                             <th>Rupees</th>
                         </tr>
@@ -33,19 +31,14 @@
                             <tr>
 
                                 <td>{{ $abc['id'] }}</td>
-
                                 <td>{{ $abc['date'] }}</td>
                                 <td>{{ $abc['day'] }}</td>
                                 <td>{{ $abc['time'] }}</td>
-
                                 <td>{{ $abc['liter'] }}</td>
                                 <td>{{ $abc['rupees'] }}</td>
 
                             </tr>
                         @endforeach
-                        <tr class="table-info">
-
-
 
                     </tbody>
                 </table>

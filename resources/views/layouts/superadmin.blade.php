@@ -57,6 +57,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('superadmindashboard') }}">{{ __('Dashboard') }}</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('addadmin') }}">{{ __('Add Admin') }}</a>
                         </li>

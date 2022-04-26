@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateLitersTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Liters table
      *
      * @return void
      */

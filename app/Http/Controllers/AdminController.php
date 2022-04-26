@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
-
+    /**
+     * Showing admin dashboard
+     *
+     * @return void
+     */
     public function showalldata()
     {
-
         try {
             $user = User::where('id', auth()->user()->id)->get();
             //return response()->json([$user]);
@@ -27,6 +30,11 @@ class AdminController extends Controller
         }
         return view('admindashboard', ['users' => $user]);
     }
+    /**
+     * Updating admin profile
+     *
+     * @return void
+     */
     public function updateProfile()
     {
         try {
@@ -36,6 +44,12 @@ class AdminController extends Controller
         }
         return view('updateadminprofile')->with('user', $user);
     }
+    /**
+     * Save admin updated profile
+     *
+     * @param Request $req
+     * @return void
+     */
     public function updateSaveUser(Request $req)
     {
         try {
@@ -52,6 +66,11 @@ class AdminController extends Controller
         }
         return redirect('/admindashboard');
     }
+    /**
+     * Show superadmin dashboard
+     *
+     * @return void
+     */
     public function superadmindata()
     {
         try {
@@ -65,6 +84,12 @@ class AdminController extends Controller
         return view('superadmindashboard', ['admins' => $data]);
 
     }
+    /**
+     * Show all admin dashboard in superadmin dashboard
+     *
+     * @param Request $req
+     * @return void
+     */
     public function showalladmindashboard(Request $req)
     {
         try {
@@ -72,10 +97,14 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
-
         return view('showcustomersdata', ['liters' => $data]);
 
     }
+    /**
+     * Show all users of admin in superadmin dashboard
+     *
+     * @return void
+     */
     public function showallusers()
     {
         try {
@@ -85,6 +114,12 @@ class AdminController extends Controller
         }
         return view('showallusers', ['liters' => $data]);
     }
+    /**
+     * Delete a user
+     *
+     * @param Request $req
+     * @return void
+     */
     public function deleteuser(Request $req)
     {
         try {
@@ -97,6 +132,12 @@ class AdminController extends Controller
         }
         return Redirect::back();
     }
+    /**
+     * Delete admin
+     *
+     * @param Request $req
+     * @return void
+     */
     public function deleteadmin(Request $req)
     {
         try {
@@ -110,6 +151,11 @@ class AdminController extends Controller
         return Redirect::back();
 
     }
+    /**
+     * Show deleted users
+     *
+     * @return void
+     */
     public function showpastusers()
     {
         try {
@@ -119,21 +165,24 @@ class AdminController extends Controller
         }
         return view('showpastusers', ['liters' => $user]);
     }
+    /**
+     * Add admin
+     *
+     * @param Request $request
+     * @return void
+     */
     public function addadmin(Request $request)
     {
 
         try {
             $liter = new User;
-
             $liter->name = $request->name;
-
             $liter->email = $request->email;
             $liter->phone_number = $request->phone_number;
             $liter->area = $request->area;
             $liter->address = $request->address;
             $liter->is_admin = $request->is_admin;
             $liter->password = Hash::make($request->password);
-
             $liter->save();
         } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
@@ -141,61 +190,64 @@ class AdminController extends Controller
 
         return redirect('superadmindashboard');
     }
+    /**
+     * Update superadmin profile
+     *
+     * @return void
+     */
     public function updatesuperadminProfile()
     {
-        try{
+        try {
             $user = User::where('id', auth()->user()->id)->first();
-        }
-
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
         return view('updatesuperadminprofile')->with('user', $user);
     }
+    /**
+     * Save updated superadmin profile
+     *
+     * @param Request $req
+     * @return void
+     */
     public function updatesuperadminSaveUser(Request $req)
     {
-        try{
+        try {
             $user = User::where('id', auth()->user()->id)->first();
             $user->name = $req->name;
             $user->email = $req->email;
             $user->phone_number = $req->phone_number;
+            $user->price = $req->price;
             $user->address = $req->address;
-
             $user->save();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
-
         return redirect('/admindashboard');
     }
+    /**
+     * Show deleted admins
+     *
+     * @return void
+     */
     public function showpastadmins()
     {
-        try{
+        try {
             $user = User::onlyTrashed()->get();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
         return view('showpastadmins', ['liters' => $user]);
     }
-    public function weeklybill()
-    {
-        //$user = User::where('is_admin', null)->where('is_superadmin', null)->get();
-        //return response()->json([$user]);
-        try{
-            $data = Liter::where('user_id', auth()->user()->id)->get();
-        }
-        catch (\Exception $e) {
-            return view('demoexception', ['errors' => $e]);
-        }
-
-        return view('emails.weeklyReport', ['liters' => $data]);
-
-    }
+    /**
+     * Send mail to admin area users using job
+     *
+     * @param Request $request
+     * @return void
+     */
     public function send_mail(Request $request)
     {
-        try{
+        try {
             $details = [
                 'subject' => 'Test Notification',
             ];
@@ -205,8 +257,7 @@ class AdminController extends Controller
 
             dispatch($job);
 
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
         echo "Mail send successfully !!";

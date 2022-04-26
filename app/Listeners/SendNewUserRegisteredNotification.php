@@ -26,22 +26,12 @@ class SendNewUserRegisteredNotification
      */
     public function handle(NewUserRegistered $event)
     {
-        //
-        //dd('hi');
-        //$event->user;
-        //dd($event->user->area);
-       //return response()->json([$event->user]);
-
+        //send sms to new user of admin area
         $admin = $event->user->where('area', $event->user->area)->where('is_admin', 1)->get();
-        //dd($admin->phone_number);
-        //dd($admin);
-        //return response()->json([$admin]);
-        $number=$admin[0]['phone_number'];
-        //dd($number);
-       // return response()->json([$admin]);
+        $number = $admin[0]['phone_number'];
 
         Nexmo::message()->send([
-            'to' => '91'.$number,
+            'to' => '91' . $number,
             'from' => '919638824606',
             'text' => 'New User joined in your area',
         ]);

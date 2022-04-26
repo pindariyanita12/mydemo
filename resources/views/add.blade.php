@@ -20,6 +20,10 @@ echo date('h:i:s A'); ?>" id="time">
 
             <input type="hidden" name="area" class="form-control" value="{{ auth()->user()->area }}" id="date">
         </div>
+        <div class="form-group ">
+
+            <input type="hidden" name="price" class="form-control"  id="price">
+        </div>
         <div class="form-group">
             <label for="liters">Add today's Liters</label>
             <input type="text" class="form-control" id="liter" name="liter">

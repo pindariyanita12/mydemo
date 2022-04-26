@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateUsersTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Users table
      *
      * @return void
      */
@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->boolean('is_admin')->nullable();
             $table->boolean('is_superadmin')->nullable();
-
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

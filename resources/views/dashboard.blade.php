@@ -34,17 +34,15 @@
                                 <td>{{ $abc['day'] }}</td>
                                 <td>{{ $abc['time'] }}</td>
                                 <td>{{ $abc['liter'] }}</td>
-
                                 <td>{{ $abc['rupees'] }}</td>
                             </tr>
                             <?php $sum = $sum + $abc['rupees']; ?>
                         @endforeach
-                        <tr class="table-info">
+
                     </tbody>
                 </table>
                 <p class="text-center"><?php echo 'Total Rupees:- ' . $sum; ?></p>
             </div>
-
         </div>
     </div>
 @endsection

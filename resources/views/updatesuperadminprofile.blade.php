@@ -1,7 +1,7 @@
 @extends('layouts.superadmin')
 
 @section('content')
-    <form class="ml-auto mr-auto" style="width:50%" action="/updatesaveuser" method="post">
+    <form class="ml-auto mr-auto" style="width:50%" action="/updatesavesuperadmin" method="post">
         @csrf
 
         <div class="form-group">
@@ -16,6 +16,11 @@
             <label for="">Phone Number</label>
             <input type="string" name="phone_number" class="form-control" value="{{ $user->phone_number }}"
                 id="phone_number">
+        </div>
+        <div class="form-group">
+            <label for="">Price</label>
+            <input type="string" name="price" class="form-control" value="{{ $user->price }}"
+                id="price">
         </div>
         <div class="form-group">
             <label for="">Address</label>

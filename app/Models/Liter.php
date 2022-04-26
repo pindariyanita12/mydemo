@@ -15,6 +15,8 @@ class Liter extends Model
         'area',
         'liter'
     ];
+
+    //relationship
     public function user()
     {
         return $this->belongsTo(User::class);

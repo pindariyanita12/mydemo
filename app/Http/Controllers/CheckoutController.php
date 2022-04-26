@@ -8,16 +8,20 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    //
+    /**
+     * Payment checkout
+     *
+     * @param [type] $email
+     * @param [type] $total
+     * @return void
+     */
     public function checkout( $email,$total)
     {
-        // Enter Your Stripe Secret
         \Stripe\Stripe::setApiKey('sk_test_51KqdEoSIr9RKeQr8vuac40CpDSSOrNATL0zEeZlCHd8JWeX3UMrIdBXtfT4yFdK6znQ3JBIavFJXz2VlUjjFPCaZ00G57LNMeP');
 
 		$amount = $total;
         $amount=100*$amount;
         $amount = (int) $amount;
-        //dd($amount);
         $payment_intent = \Stripe\PaymentIntent::create([
 			'description' => 'Stripe Test Payment',
 			'amount' => $amount,
@@ -32,8 +36,4 @@ class CheckoutController extends Controller
 
     }
 
-    public function afterPayment()
-    {
-        echo 'Payment Has been Received';
-    }
 }

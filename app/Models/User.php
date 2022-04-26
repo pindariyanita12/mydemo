@@ -46,6 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $dates = ['deleted_at'];
+
+    //relationship
     public function liters()
     {
         return $this->hasMany(Liter::class);

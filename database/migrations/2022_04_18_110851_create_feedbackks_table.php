@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateFeedbackksTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Feedback table
      *
      * @return void
      */
