@@ -7,6 +7,7 @@ use App\Models\Liter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
@@ -94,6 +95,7 @@ class AdminController extends Controller
     {
         try {
             $data = Liter::where('area', $req->area)->with('user')->get();
+            //return response()->json([$data]);
         } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
@@ -159,7 +161,7 @@ class AdminController extends Controller
     public function showpastusers()
     {
         try {
-            $user = User::onlyTrashed()->get();
+            $user = User::where('is_admin', null)->where('area', auth()->user()->area)->onlyTrashed()->get();
         } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
         }
@@ -214,11 +216,11 @@ class AdminController extends Controller
     {
         try {
             $user = User::where('id', auth()->user()->id)->first();
-            $user->name = $req->name;
-            $user->email = $req->email;
-            $user->phone_number = $req->phone_number;
+            // $user->name = $req->name;
+            // $user->email = $req->email;
+            // $user->phone_number = $req->phone_number;
             $user->price = $req->price;
-            $user->address = $req->address;
+            //$user->address = $req->address;
             $user->save();
         } catch (\Exception $e) {
             return view('demoexception', ['errors' => $e]);
@@ -232,12 +234,26 @@ class AdminController extends Controller
      */
     public function showpastadmins()
     {
-        try {
-            $user = User::onlyTrashed()->get();
-        } catch (\Exception $e) {
-            return view('demoexception', ['errors' => $e]);
-        }
-        return view('showpastadmins', ['liters' => $user]);
+        // try {
+        //     $user = User::where('is_admin',1)->onlyTrashed()->get();
+        // } catch (\Exception $e) {
+        //     return view('demoexception', ['errors' => $e]);
+        // }
+        // return view('showpastadmins', ['liters' => $user]);
+        $arr = [["x" => ["tr" => "notrated"], ["tr" => "notrated"]], ["y" => ["tr" => "notrated"], ["tr" => "notrated"]]];
+        $collection = collect($arr);
+        //$grouped = $collection->countBy('');
+        //$collection = collect(['alice@gmail.com', 'bob@yahoo.com', 'carlos@gmail.com']);
+
+        $counted = $collection->countBy(function ($email) {
+            return ;
+        });
+
+        $counted->all();
+
+        //$final = $groupedd->except('accounts');
+        dd($grouped);
+
     }
     /**
      * Send mail to admin area users using job

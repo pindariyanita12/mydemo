@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Events\NewUserRegistered;
+use App\Events\Pricechanged;
 
 class UserObserver
 {
@@ -29,6 +30,7 @@ class UserObserver
     public function updated(User $user)
     {
         //
+        event(new Pricechanged($user));
     }
 
     /**

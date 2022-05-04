@@ -4,7 +4,7 @@
     <form class="ml-auto mr-auto" style="width:50%" action="/updatesavesuperadmin" method="post">
         @csrf
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="">Name</label>
             <input type="text" name="name" class="form-control" value="{{ $user->name }}" id="name">
         </div>
@@ -16,16 +16,16 @@
             <label for="">Phone Number</label>
             <input type="string" name="phone_number" class="form-control" value="{{ $user->phone_number }}"
                 id="phone_number">
-        </div>
+        </div> --}}
         <div class="form-group">
             <label for="">Price</label>
             <input type="string" name="price" class="form-control" value="{{ $user->price }}"
                 id="price">
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="">Address</label>
             <input type="string" class="form-control" id="address" name="address" value="{{ $user->address }}">
-        </div>
+        </div> --}}
 
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

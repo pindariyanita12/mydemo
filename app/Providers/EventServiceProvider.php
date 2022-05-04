@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\User;
 use App\Observers\UserObserver;
 use App\Events\NewUserRegistered;
+use App\Events\Pricechanged;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\SendNewUserRegisteredNotification;
+use App\Listeners\SendPriceChangedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         NewUserRegistered::class => [
             SendNewUserRegisteredNotification::class,
         ],
+        Pricechanged::class=>[
+            SendPriceChangedNotification::class,
+        ]
     ];
 
     /**
